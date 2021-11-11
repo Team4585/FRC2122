@@ -1,98 +1,112 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+/*----------------------------------------------------------------------------*/
+/* Copym_right (c) 2017-2018 FIRST. All m_rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.biblioteca.RoboBaseClass;
+import java.util.*;
+import java.io.*;
 
-/**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
- * project.
- */
-public class Robot extends TimedRobot {
-  private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+public class Robot extends TimedRobot 
+{
+  WestCoastChassis m_theChassis;
+  NewJoystick m_theJoystick;
+  Human m_theHuman;
 
-  /**
-   * This function is run when the robot is first started up and should be used for any
-   * initialization code.
-   */
+
+  //This is where we initialize our main objects
   @Override
-  public void robotInit() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
+  public void robotInit() 
+  {
+//    SmartDashboard.putNumber("Forward Axis", 1);
+//    SmartDashboard.putNumber("TwistAxis", 2)
+//    SmartDashboard.putNumber("StrafeAxis", 0);
+//    SmartDashboard.putNumber("AimAxis", 2);
+//    SmartDashboard.putNumber("Aim Override Button", 1);
+//    SmartDashboard.putNumber("Shoot Button", 1);
+//    SmartDashboard.putNumber("Intake Button", 2);
+//    SmartDashboard.putNumber("Helix Button", 3);
+//    SmartDashboard.putNumber("Joystick Deadzones", 0.25);
+
+    m_theChassis = new WestCoastChassis();
+    m_theJoystick = new NewJoystick();
+    m_theHuman = new Human(m_theChassis, m_theJoystick);
   }
 
-  /**
-   * This function is called every robot packet, no matter the mode. Use this for items like
-   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
-   *
-   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
-   * SmartDashboard integrated updating.
-   */
-  @Override
-  public void robotPeriodic() {}
-
-  /**
-   * This autonomous (along with the chooser code above) shows how to select between different
-   * autonomous modes using the dashboard. The sendable chooser code works with the Java
-   * SmartDashboard. If you prefer the LabVIEW Dashboard, remove all of the chooser code and
-   * uncomment the getString line to get the auto name from the text box below the Gyro
-   *
-   * <p>You can add additional auto modes by adding additional comparisons to the switch structure
-   * below with additional strings. If using the SendableChooser make sure to add them to the
-   * chooser code above as well.
-   */
-  @Override
-  public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
+  //This is calling the more specific "constructors" of objects with init methods
+  public void initSubsystems()
+  {
+    m_theJoystick.newJoystickInit();
+    m_theChassis.westCoastChassisInit();
   }
 
-  /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
+  public void robotPeriodic() 
+  {
+
   }
 
-  /** This function is called once when teleop is enabled. */
+  //This initializes the values for autonomous
   @Override
-  public void teleopInit() {}
+  public void autonomousInit() 
+  {
+    //m_autoController.Init(m_driveTrain, m_limeLight);
+    //m_autoController.setActive(true);
+  }
 
-  /** This function is called periodically during operator control. */
+  /* When "Autonomous" is selected on the driver station, the autonomousInit() will be run
+    and then this runs the associated actions
+  */
   @Override
-  public void teleopPeriodic() {}
+  public void autonomousPeriodic() 
+  {
+    //Cry
+    RoboBaseClass.gatherInfoAll();
+    RoboBaseClass.doActionsAll();
+  }
 
-  /** This function is called once when the robot is disabled. */
+  //This initializes the values for "TeleOperated" as seen on the driver station
   @Override
-  public void disabledInit() {}
+  public void teleopInit() 
+  {
+ //   RobotConstants.forwardAxis = (int) SmartDashboard.getNumber("Forward Axis", 1);
+ //   RobotConstants.twistAxis = (int) SmartDashboard.getNumber("Twist Axis", 2);
+ //   RobotConstants.strafeAxis = (int) SmartDashboard.getNumber("Strafe Axis", 0);
+ //   RobotConstants.aimAxis = (int) SmartDashboard.getNumber("Aim Axis", 1);
+ //   RobotConstants.aimOverrideButton = (int) SmartDashboard.getNumber("Aim Override Button", 1);
+ //   RobotConstants.shootButton = (int) SmartDashboard.getNumber("Shoot Button", 1);
+ //   RobotConstants.intakeButton = (int) SmartDashboard.getNumber("Intake Button", 2);
+ //   RobotConstants.helixButton = (int) SmartDashboard.getNumber("Helix Button", 3);
+ //   RobotConstants.joystickDeadZone = (int) SmartDashboard.getNumber("Joystick Deadzones", 0.25);
 
-  /** This function is called periodically when disabled. */
-  @Override
-  public void disabledPeriodic() {}
+    initSubsystems();
+  }
 
-  /** This function is called once when test mode is enabled. */
+  //This runs the actions for TeleOp
   @Override
-  public void testInit() {}
+  public void teleopPeriodic() 
+  {
+     double joystickValue = m_theJoystick.gatherInformation();  //basically assigns joystick values
+      m_theHuman.makeCalculations(joystickValue);
+      m_theChassis.chassisDoActions();
 
-  /** This function is called periodically during test mode. */
+    RoboBaseClass.doActionsAll();
+  }
+
+  //This is for the "Test" setting on drive station
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() 
+  {
+
+  }
 }
+// woo code
+
