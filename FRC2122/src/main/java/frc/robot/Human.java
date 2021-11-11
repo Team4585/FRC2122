@@ -7,34 +7,65 @@
 
 package frc.robot;
 
+/**
+ * A class for the Human, responsible for making all of the calculations after receiving values from the Joystick.
+ */
 public class Human
 {
-    WestCoastChassis westCoastChassis = null;
-    NewJoystick m_targJoystick = null;
+    WestCoastChassis m_targChassis;
+    NewJoystick m_targJoystick;
     double m_forwardSpeed = 0.0;
+    double m_twistSpeed = 0.0;
 
+    /**
+     * A parameterized constructor for the Human.
+     * @param tempChassis The chassis to move the robot.
+     * @param tempJoystick The joystick to read values and gather information.
+     */
     public Human(WestCoastChassis tempChassis, NewJoystick tempJoystick)
     {
         this.m_targChassis = tempChassis;
         this.m_targJoystick = tempJoystick;
     }
 
-    public void makeCalculations(double joystickValue)
+    /**
+     * A method to calculate direction and speed of the robot, based on the values of m_forwardSpeed and forwardJoystickValue.
+     */
+    public void makeCalculations()
     {
-        m_forwardSpeed = Math.pow(joystickValue, 2.0);
+        double forwardJoystickValue = m_targJoystick.m_forwardAxis;
+        m_forwardSpeed = Math.pow(forwardJoystickValue, 2.0);
 
         //m_theChassis.setVals(m_theJoystick.getForwardAxis(), m_theJoystick.getTwistAxis(), m_theJoystick.getStrafeAxis());
-        if (joystickValue > 0)
+        if (forwardJoystickValue > 0)
         {
-            m_targChassis.setCommand(Chassis.chassisCommands.MOVEFORWARD, m_forwardSpeed);
+            m_targChassis.setCommand(WestCoastChassis.chassisCommands.MOVEFORWARD, m_forwardSpeed);
         }
-        else if (joystickValue < 0)
+        else if (forwardJoystickValue < 0)
         {
-            m_targChassis.setCommand(Chassis.chassisCommands.MOVEBACKWARD, m_forwardSpeed);
+            m_targChassis.setCommand(WestCoastChassis.chassisCommands.MOVEBACKWARD, m_forwardSpeed);
         }
         else
         {
-            m_targChassis.setCommand(Chassis.chassisCommands.DONOTHING, 0.0);
+            m_targChassis.setCommand(WestCoastChassis.chassisCommands.DONOTHING, 0.0);
         }
+        
+        double twistJoystickValue = m_targJoystick.m_twistAxis;
+        m_twistSpeed = Math.pow(twistJoystickValue, 2.0);
+
+        if (twistJoystickValue > 0)
+        {
+            m_targChassis.setRotateCommand(WestCoastChassis.rotateCommands.TURNRIGHT, m_twistSpeed);
+        }
+        else if (twistJoystickValue < 0)
+        {
+            m_targChassis.setRotateCommand(WestCoastChassis.rotateCommands.TURNLEFT, m_twistSpeed);
+        }
+        else
+        {
+            m_targChassis.setRotateCommand(WestCoastChassis.rotateCommands.NOROTATE, 0.0);
+        }
+        
+
     }
 }

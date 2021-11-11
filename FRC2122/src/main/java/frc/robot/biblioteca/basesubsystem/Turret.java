@@ -15,7 +15,7 @@ public abstract class Turret extends RoboBaseClass {
   private double m_xMax = 180;
   private double m_yMin = 0;
   private double m_yMax = 0;
-  protected boolean m_PIDEnable = false;
+  protected boolean m_PIDEnable = true;
   
   private BasicPID m_PIDX;
   private BasicPID m_PIDY;
@@ -53,7 +53,7 @@ public abstract class Turret extends RoboBaseClass {
   public void setShoot(double speed) {
     m_shoot = speed;
   }
-  abstract protected void shoot(double velocity);
+  abstract public void shoot(double velocity);
   abstract public void rotateX(double x);
   abstract public void rotateY(double y);
   @Override

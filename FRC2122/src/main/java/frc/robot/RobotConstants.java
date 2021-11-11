@@ -27,10 +27,10 @@ public class RobotConstants {
     public static int aimPotentiometerPort = 0;
     //Joystick
     public static double joystickDeadZone = 0.1;//0 to 1
-    public static int forwardAxis = 0;
+    public static int forwardAxis = 1;
     public static int twistAxis = 2;
-    public static int strafeAxis = 1;
-    public static int aimAxis = 0;
+    public static int strafeAxis = 0;
+    //public static int aimAxis = 3;
 
     public static int aimOverrideButton = 1;
     public static int shootButton = 1;

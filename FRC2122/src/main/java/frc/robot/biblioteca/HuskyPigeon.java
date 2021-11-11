@@ -12,19 +12,15 @@ public class HuskyPigeon extends Vector3DIn {
         reset();
     }
     public void gatherInfo() {
-        double[] ypr = new double[3];
-        m_pigeon.getYawPitchRoll(ypr);
-        m_heading = new HuskyVector3D(ypr[2], ypr[1], ypr[0]);
+        double[] angles = new double[3];
+        m_pigeon.getYawPitchRoll(angles);
+        m_heading = new HuskyVector3D(angles[0], angles[1], angles[2]);
     }
     public HuskyVector3D getHeading(){
         return m_heading;
     }
-    public double getHeadingBasic() {
-        return m_pigeon.getFusedHeading();
-    }
     public void reset() {
         m_pigeon.setYaw(0);
-        m_pigeon.setFusedHeading(0);
     }
     public void adjustToRange(double offset) {
         while(getValue().getX() < offset) {

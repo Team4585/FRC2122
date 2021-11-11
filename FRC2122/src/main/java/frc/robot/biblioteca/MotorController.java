@@ -26,9 +26,9 @@ public class MotorController extends AnalogOutput {
     }
     @Override
     public void gatherInfo(){
-        // if(m_ifFollowing == true){
-        //     m_speed = m_following.getTargetSpeed();
-        // }
+        if(m_ifFollowing == true){
+            m_speed = m_following.getTargetSpeed();
+        }
     }
     public void setInverted(boolean inve){
         if(inve){
@@ -40,11 +40,10 @@ public class MotorController extends AnalogOutput {
     protected void setRealSpeed(double speed) {
         m_realSpeed = speed;
     }
-    public void setNeutralMode(int mode) {}
     @Override
     public void doActions(){
-        // if(m_following != null) {
-        //     this.m_following.set(m_speed * -1);
-        // }
+        if(m_following != null) {
+            this.m_following.set(m_speed * -1);
+        }
     }
 }

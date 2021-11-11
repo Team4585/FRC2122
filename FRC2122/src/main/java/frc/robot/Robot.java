@@ -7,14 +7,12 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.biblioteca.RoboBaseClass;
-import java.util.*;
-import java.io.*;
 
+/**
+ * A class to initialize Joystick, Human, and Chassis objects, run commands periodically, and use the main method to communicate with the driver station.
+ */
 public class Robot extends TimedRobot 
 {
   WestCoastChassis m_theChassis;
@@ -23,6 +21,9 @@ public class Robot extends TimedRobot
 
 
   //This is where we initialize our main objects
+  /**
+   * A method to initialize the main objects - Joystick, Human, and the Chassis.
+   */
   @Override
   public void robotInit() 
   {
@@ -42,19 +43,27 @@ public class Robot extends TimedRobot
   }
 
   //This is calling the more specific "constructors" of objects with init methods
+  /**
+   * A method to call the more specific initializer methods of the objects.
+   */
   public void initSubsystems()
   {
     m_theJoystick.newJoystickInit();
     m_theChassis.westCoastChassisInit();
   }
 
+  /**
+   * An overriden method from TimedRobot.
+   */
   @Override
   public void robotPeriodic() 
   {
 
   }
 
-  //This initializes the values for autonomous
+  /**
+   * Initializes values for the autonomous period.
+   */
   @Override
   public void autonomousInit() 
   {
@@ -62,9 +71,10 @@ public class Robot extends TimedRobot
     //m_autoController.setActive(true);
   }
 
-  /* When "Autonomous" is selected on the driver station, the autonomousInit() will be run
-    and then this runs the associated actions
-  */
+
+  /**
+   * A method to run the autonomousInit() method, along with the associated actions (when autonomous is selected on the driver station).
+   */
   @Override
   public void autonomousPeriodic() 
   {
@@ -73,7 +83,9 @@ public class Robot extends TimedRobot
     RoboBaseClass.doActionsAll();
   }
 
-  //This initializes the values for "TeleOperated" as seen on the driver station
+  /**
+   * Initializes the values for the teleoperated period (selected from the driver station).
+   */
   @Override
   public void teleopInit() 
   {
@@ -91,17 +103,26 @@ public class Robot extends TimedRobot
   }
 
   //This runs the actions for TeleOp
+  /**
+   * Runs the actions for the teleoperated period.
+   */
   @Override
   public void teleopPeriodic() 
   {
-     double joystickValue = m_theJoystick.gatherInformation();  //basically assigns joystick values
-      m_theHuman.makeCalculations(joystickValue);
+    RoboBaseClass.gatherInfoAll();
+    
+      m_theJoystick.gatherInformation();  //basically assigns joystick values
+      m_theHuman.makeCalculations();
       m_theChassis.chassisDoActions();
+      m_theChassis.chassisRotateActions();
 
     RoboBaseClass.doActionsAll();
   }
 
   //This is for the "Test" setting on drive station
+  /**
+   * An overriden method that controls the "test" setting on the drive station
+   */
   @Override
   public void testPeriodic() 
   {
