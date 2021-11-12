@@ -16,6 +16,7 @@ public class Human
     NewJoystick m_targJoystick;
     double m_forwardSpeed = 0.0;
     double m_twistSpeed = 0.0;
+    double m_deadZone = 0.5;
 
     /**
      * A parameterized constructor for the Human.
@@ -37,11 +38,11 @@ public class Human
         m_forwardSpeed = Math.pow(forwardJoystickValue, 2.0);
 
         //m_theChassis.setVals(m_theJoystick.getForwardAxis(), m_theJoystick.getTwistAxis(), m_theJoystick.getStrafeAxis());
-        if (forwardJoystickValue > 0)
+        if (forwardJoystickValue > m_deadZone)
         {
             m_targChassis.setCommand(WestCoastChassis.chassisCommands.MOVEFORWARD, m_forwardSpeed);
         }
-        else if (forwardJoystickValue < 0)
+        else if (forwardJoystickValue < -m_deadZone)
         {
             m_targChassis.setCommand(WestCoastChassis.chassisCommands.MOVEBACKWARD, m_forwardSpeed);
         }
@@ -53,11 +54,11 @@ public class Human
         double twistJoystickValue = m_targJoystick.m_twistAxis;
         m_twistSpeed = Math.pow(twistJoystickValue, 2.0);
 
-        if (twistJoystickValue > 0)
+        if (twistJoystickValue > m_deadZone)
         {
             m_targChassis.setRotateCommand(WestCoastChassis.rotateCommands.TURNRIGHT, m_twistSpeed);
         }
-        else if (twistJoystickValue < 0)
+        else if (twistJoystickValue < -m_deadZone)
         {
             m_targChassis.setRotateCommand(WestCoastChassis.rotateCommands.TURNLEFT, m_twistSpeed);
         }
@@ -65,7 +66,9 @@ public class Human
         {
             m_targChassis.setRotateCommand(WestCoastChassis.rotateCommands.NOROTATE, 0.0);
         }
-        
+    }
 
+    public void setDeadZone(double deadZone) {
+        m_deadZone = deadZone;
     }
 }

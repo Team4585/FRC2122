@@ -46,8 +46,8 @@ public class WestCoastDrive extends Drive
         // m_rightMaster.set(m_forward + m_twist * invertRight);
         // m_leftMaster.set(m_forward + m_twist * invertLeft);
 
-         m_rightMaster.set(m_forward + (m_twist * invertRight));
-         m_leftMaster.set(m_forward + (m_twist * invertLeft));
+         m_rightMaster.set(-m_forward - (m_twist * invertRight));
+         m_leftMaster.set(m_forward - (m_twist * invertLeft));
         
         // m_rightMaster.set(-m_forward);
         // m_leftMaster.set(m_forward);
