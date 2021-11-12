@@ -6,8 +6,14 @@ package frc.robot;
 import frc.robot.biblioteca.basesubsystem.MecanumDrive;
 import frc.robot.biblioteca.HuskyTalon;
 
+/**
+A class that creates a chassis with motor controllers and has methods to move around.
+ */
 public class Chassis
 {
+    /**
+    An enum with three commands to move the robot.
+     */
     enum chassisCommands
     {
         MOVEFORWARD,
@@ -28,11 +34,17 @@ public class Chassis
     chassisCommands m_currentCommand = chassisCommands.DONOTHING;
     double m_commandParameter = 0.0;
     
+    /**
+    A blank constructor
+    */
     public Chassis()
     {
 
     }
 
+    /**
+    A method that sets the four motor controllers to the chassis and creates a mecanum drive wtih the four controllers.
+    */
     public void chassisInit()
     {
         front_left = new HuskyTalon(1);
@@ -44,6 +56,9 @@ public class Chassis
 
     }
 
+    /**
+    A method that moves the robot, based on the command given and the speed inputted.
+    */
     public void chassisDoActions()
     {
         switch (m_currentCommand)
@@ -71,6 +86,9 @@ public class Chassis
         // m_driveTrain.setStrafe(strafeVal);
     }
 
+    /**
+    A method that initializes the values of forward, twist, and strafe 
+    */
     private void setVals(double forward, double twist, double strafe)
     {
         forwardVal = forward;
@@ -78,11 +96,12 @@ public class Chassis
         strafeVal = strafe;
     }
 
+    /**
+    Initializes the commands for the speed and the type of movement
+    */
     public void setCommand(chassisCommands targetCommand, double commandParam)
     {
         this.m_currentCommand = targetCommand;
         this.m_commandParameter = commandParam;
     }
-
-
 }
