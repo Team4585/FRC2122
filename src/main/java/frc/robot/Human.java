@@ -16,7 +16,7 @@ public class Human
     NewJoystick m_targJoystick;
     double m_forwardSpeed = 0.0;
     double m_twistSpeed = 0.0;
-    double m_deadZone = 0.5;
+    double m_deadZone = 0.2;
 
     /**
      * A parameterized constructor for the Human.
