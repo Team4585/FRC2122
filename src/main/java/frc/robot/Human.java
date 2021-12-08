@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import frc.robot.subsystem.*;
+
 /**
  * A class for the Human, responsible for making all of the calculations after receiving values from the Joystick.
  */
@@ -14,6 +16,8 @@ public class Human
 {
     WestCoastChassis m_targChassis;
     NewJoystick m_targJoystick;
+    WeaponsJoystick m_weaponsJoystick;
+    AmesWall m_wall;
     double m_forwardSpeed = 0.0;
     double m_twistSpeed = 0.0;
     double m_deadZone = 0.2;
@@ -22,11 +26,15 @@ public class Human
      * A parameterized constructor for the Human.
      * @param tempChassis The chassis to move the robot.
      * @param tempJoystick The joystick to read values and gather information.
+     * @param tempWeaponsJoystick The joystick that gets information for the subsystems.
+     * @param tempWall The wall that can move in four directions.
      */
-    public Human(WestCoastChassis tempChassis, NewJoystick tempJoystick)
+    public Human(WestCoastChassis tempChassis, NewJoystick tempJoystick, WeaponsJoystick tempWeaponsJoystick, AmesWall tempWall)
     {
         this.m_targChassis = tempChassis;
         this.m_targJoystick = tempJoystick;
+        this.m_weaponsJoystick = tempWeaponsJoystick;
+        this.m_wall = tempWall;
     }
 
     /**
@@ -65,6 +73,27 @@ public class Human
         else
         {
             m_targChassis.setRotateCommand(WestCoastChassis.rotateCommands.NOROTATE, 0.0);
+        }
+
+        boolean m_button3 = m_weaponsJoystick.getButton3();
+        boolean m_button4 = m_weaponsJoystick.getButton4();
+        boolean m_button5 = m_weaponsJoystick.getButton5();
+        boolean m_button6 = m_weaponsJoystick.getButton6();
+
+        if (m_button3) {
+            m_wall.moveUp();
+        }
+
+        if (m_button4) {
+            m_wall.moveDown();
+        }
+
+        if (m_button5) {
+            m_wall.moveLeft();
+        }
+
+        if (m_button6) {
+            m_wall.moveRight();
         }
     }
 
